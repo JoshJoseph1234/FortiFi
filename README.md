@@ -68,3 +68,16 @@ bash
 Copy
 Edit
 docker-compose up --build
+
+4. Visit in browser
+Frontend: http://localhost:3000
+
+Backend API: http://localhost:8000
+
+Dashboard: http://localhost:4000
+
+📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+📬 Contact
+Got questions or suggestions? Reach out via GitHub Issues or email the team.
