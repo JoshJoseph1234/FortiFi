@@ -28,3 +28,43 @@
 
 ## 🏗️ Project Structure
 
+fortifi/
+├── backend/ # FastAPI or Node.js backend APIs
+├── ml-engine/ # Machine learning scoring engine + model APIs
+├── frontend/ # React-based user-facing app
+├── dashboard/ # Admin risk monitoring dashboard
+├── database/ # PostgreSQL schema, Redis config
+├── deployments/ # Docker Compose, .env samples, CI/CD scripts
+├── docs/ # Architecture diagrams, API docs, guides
+├── README.md
+└── LICENSE
+
+
+---
+
+## ⚙️ Tech Stack
+
+- **Frontend:** React.js, TailwindCSS, FingerprintJS  
+- **Backend:** FastAPI / Node.js, PostgreSQL, Redis  
+- **ML Models:** Scikit-learn, SHAP (for explainability)  
+- **Authentication:** WebAuthn (FIDO2), Twilio OTP (fallback)  
+- **DevOps:** Docker, Docker Compose, Railway / Render for deployment
+
+---
+
+## 🧪 How to Run (Locally)
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-team/fortifi.git
+cd fortifi
+
+2. Setup environment variables
+Copy and edit .env.sample files in each subproject:
+cp .env.sample .env
+
+3. Run with Docker
+bash
+Copy
+Edit
+docker-compose up --build
