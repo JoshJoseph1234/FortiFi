@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { getDeviceFingerprint } from '@/utils/fingerprint';
+import axios from 'axios';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -9,12 +11,61 @@ export default function RegisterPage() {
     setKeystrokes((prev) => [...prev, Date.now()]);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Name:', name);
-    console.log('Phone:', phone);
-    console.log('Keystrokes:', keystrokes);
+  
+
+// const handleSubmit = async (e: React.FormEvent) => {
+//   e.preventDefault();
+
+//   const fingerprint = await getDeviceFingerprint();
+
+//   const payload = {
+//     name,
+//     phone,
+//     fingerprint,
+//     keystrokes,
+//   };
+
+//   try {
+//     const response = await axios.post('http://localhost:8000/api/register', payload);
+//     console.log('Backend response:', response.data);
+//     // TODO: Redirect based on response (we'll do this next)
+//   } catch (err) {
+//     console.error('Registration failed:', err);
+//   }
+// };
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const fingerprint = await getDeviceFingerprint();
+
+  const payload = {
+    name,
+    phone,
+    fingerprint,
+    keystrokes,
   };
+
+  console.log('Sending payload:', payload);
+
+  // TEMP MOCK RESPONSE
+  const response = {
+    data: {
+      status: name.toLowerCase().includes('bot') ? 'flagged' : 'approved',
+    },
+  };
+
+  // Redirect based on fake response
+  if (response.data.status === 'flagged') {
+  window.location.href = '/cognitive';
+  } else {
+  window.location.href = '/result?status=success';
+  }
+
+};
+
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
@@ -28,7 +79,7 @@ export default function RegisterPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300 text-black"
             placeholder="John Doe"
             />
         </div>
@@ -39,7 +90,7 @@ export default function RegisterPage() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300 text-black"
             placeholder="+91-XXXXXXXXXX"
             />
         </div>
