@@ -26,30 +26,56 @@ export default function RiskTable() {
     setModalOpen(true);
   };
 
+  const getRiskLevel = (score: number) => {
+    if (score > 0.7) return "High";
+    if (score > 0.4) return "Medium";
+    return "Low";
+  };
+
+  const getBadgeStyle = (score: number) => {
+    if (score > 0.7) return "bg-red-700 text-red-100";
+    if (score > 0.4) return "bg-amber-600 text-amber-100";
+    return "bg-emerald-600 text-emerald-100";
+  };
+
   return (
-    <div>
-      <table className="w-full border mt-6">
-        <thead>
-          <tr className="bg-gray-200 text-left">
-            <th className="p-2">Session</th>
-            <th className="p-2">User</th>
-            <th className="p-2">Risk Score</th>
-            <th className="p-2">Time</th>
-            <th className="p-2">Reason</th>
+    <div className="overflow-x-auto mt-6">
+      <table className="w-full border border-slate-700 rounded-lg overflow-hidden shadow bg-slate-800">
+        <thead className="bg-slate-700 text-slate-200">
+          <tr>
+            <th className="p-3 text-left">Session</th>
+            <th className="p-3 text-left">User</th>
+            <th className="p-3 text-left">Risk Score</th>
+            <th className="p-3 text-left">Time</th>
+            <th className="p-3 text-left">Reason</th>
+            <th className="p-3 text-left">Risk Level</th>
           </tr>
         </thead>
         <tbody>
           {data.map((entry, i) => (
             <tr
               key={i}
-              className={`cursor-pointer ${entry.score > 0.7 ? "bg-red-100" : "hover:bg-gray-100"}`}
               onClick={() => openModal(entry)}
+              className={`cursor-pointer transition hover:bg-slate-700 ${
+                entry.score > 0.7
+                  ? "bg-red-900/20"
+                  : entry.score > 0.4
+                  ? "bg-amber-900/20"
+                  : "bg-emerald-900/20"
+              }`}
             >
-              <td className="p-2">{entry.id}</td>
-              <td className="p-2">{entry.user}</td>
-              <td className="p-2">{(entry.score * 100).toFixed(0)}%</td>
-              <td className="p-2">{entry.time}</td>
-              <td className="p-2">{entry.reason}</td>
+              <td className="p-3">{entry.id}</td>
+              <td className="p-3">{entry.user}</td>
+              <td className="p-3">{(entry.score * 100).toFixed(0)}%</td>
+              <td className="p-3">{entry.time}</td>
+              <td className="p-3">{entry.reason}</td>
+              <td className="p-3">
+                <span
+                  className={`px-2 py-1 rounded-full text-sm font-semibold ${getBadgeStyle(entry.score)}`}
+                >
+                  {getRiskLevel(entry.score)}
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>
