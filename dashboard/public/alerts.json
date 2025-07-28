@@ -1,0 +1,16 @@
+[
+  {
+    "id": "session123",
+    "user": "user01",
+    "score": 0.85,
+    "time": "2025-07-21 12:30",
+    "reason": "SIM mismatch + typing anomaly"
+  },
+  {
+    "id": "session124",
+    "user": "user02",
+    "score": 0.32,
+    "time": "2025-07-21 12:35",
+    "reason": "Normal"
+  }
+]

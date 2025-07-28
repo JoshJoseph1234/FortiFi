@@ -63,11 +63,22 @@ cd fortifi
 Copy and edit .env.sample files in each subproject:
 cp .env.sample .env
 
-3. Run with Docker
-bash
-Copy
-Edit
+3. ## 🐳 Docker Setup (Local Development)
+
+1. Copy the `.env.sample` to `.env` and fill in credentials.
+2. From the `deployments/` folder, run:
+   ```bash
+   docker-compose up --build
+
+---
+
+### 🔹 Test Docker Setup (Optional Now)
+
+Once others start adding Dockerfiles in `/backend`, `/ml-engine`, etc., you’ll be ready to test:
+```bash
+cd deployments
 docker-compose up --build
+
 
 4. Visit in browser
 Frontend: http://localhost:3000

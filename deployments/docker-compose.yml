@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: fortifi_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:alpine
+    container_name: fortifi_redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ../backend
+    container_name: fortifi_backend
+    ports:
+      - "${BACKEND_PORT}:8000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+
+  ml-engine:
+    build: ../ml-engine
+    container_name: fortifi_ml
+    ports:
+      - "${ML_ENGINE_PORT}:5000"
+    env_file:
+      - .env
+
+  dashboard:
+    build: ../dashboard
+    container_name: fortifi_dashboard
+    ports:
+      - "${DASHBOARD_PORT}:4000"
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
